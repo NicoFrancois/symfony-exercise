@@ -5,7 +5,7 @@
     <h1>Liste des articles par catégorie</h1>
 
     {%  for category in categories %}
-        <h2>   {% filter upper %} {{ category.name }}  {% endfilter %} </h2>
+        <a href="{{ path('category_show', {'id': category.id }) }}" > <h2>{% filter upper %} {{ category.name }} {% endfilter %}</h2>
 
         {%  for article in category.articles %}
             <h3>  {{ article.title }} </h3>

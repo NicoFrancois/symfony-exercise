@@ -25,4 +25,17 @@ class CategoryController extends AbstractController
             ['categories' => $categories]
         );
     }
+
+    /**
+     * @Route("category/{id}", name="category_show")
+     * @param Category $category
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function show(Category $category)
+    {
+        return $this->render(
+            '/category/categoryshow.html.twig',
+            ['category' => $category]
+        );
+    }
 }
