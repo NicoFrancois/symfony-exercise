@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Article;
+use App\Entity\Category;
 
 class BlogController extends AbstractController
 {
@@ -85,6 +86,31 @@ class BlogController extends AbstractController
         return $this->render(
             'blog/index.html.twig',
             ['articles' => $articles]
+        );
+    }
+
+    /**
+     * 0return Response
+     *@Route("/blog/category/{categorie}", name="categories")
+     */
+    public function showByCategory(string $categorie) :Response
+    {
+        $category = $this ->getDoctrine()
+            ->getRepository(Category::class)
+            ->findOneBy(
+                ['name' => $categorie]
+            );
+        $articles = $this ->getDoctrine()
+            ->getRepository(Article::class)
+            ->findBy(
+                ['category'=>$category->getId()],
+                ['id'=>'desc'],
+                3
+            );
+        return  $this->render(
+            'blog/category.html.twig',
+            ['articles'=>$articles,
+                'category'=>$category]
         );
     }
 }
