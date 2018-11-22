@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{%  block body %}
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <input type="submit" value="Send" />
+    {{ form_end(form) }}
+
+    <a href="{{ path('blog_index') }}">retour à la liste</a>
+{%  endblock %}
