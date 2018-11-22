@@ -1,41 +1,49 @@
 <?php
+
 namespace App\Controller;
+
 use App\Entity\Category;
+use App\Form\CategoryType;
+use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/")
+ */
 class CategoryController extends AbstractController
 {
     /**
-     * @Route("category", name="category")
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/", name="category_show", methods="GET")
      */
-    public function index()
+    public function index(CategoryRepository $categoryRepository): Response
     {
-        $categories = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findAll();
-        if (!$categories) {
-            throw $this->createNotFoundException(
-                'No article found in article\'s table.'
-            );
-        }
-        return $this->render(
-            '/category/category.html.twig',
-            ['categories' => $categories]
-        );
+        return $this->render('category/category.html.twig', ['categories' => $categoryRepository->findAll()]);
     }
 
     /**
-     * @Route("category/{id}", name="category_show")
-     * @param Category $category
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("category", name="category_new", methods="GET|POST")
      */
-    public function show(Category $category)
+    public function new(Request $request): Response
     {
-        return $this->render(
-            '/category/categoryshow.html.twig',
-            ['category' => $category]
-        );
+        $category = new Category();
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($category);
+            $em->flush();
+
+            return $this->redirectToRoute('category_show');
+        }
+
+        return $this->render('category/new.html.twig', [
+            'category' => $category,
+            'form' => $form->createView(),
+        ]);
     }
+
 }
