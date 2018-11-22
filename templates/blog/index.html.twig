@@ -6,7 +6,7 @@
 {% block stylesheets %}{% endblock %}
 
 {% block body %}
-    <h1>All articles from article s table : </h1>
+    <h1>Liste des articles : </h1>
     {% for article in articles %}
         <div>
             <h2>{{ loop.index }} / {{ article.title }} - Category : {{ article.category.name }}</h2>
@@ -16,6 +16,7 @@
     <a href="{{ path('homepage') }}">
         Back to homepage.
     </a>
+    <a href="{{ path('articlenew') }}">Ajouter  à la liste</a>
 
 
 {% endblock %}
