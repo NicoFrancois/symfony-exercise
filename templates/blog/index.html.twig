@@ -12,6 +12,7 @@
             <th>Title</th>
             <th>Category</th>
             <th>Content</th>
+            <th>Tag</th>
         </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
                 <td>
                     {{ article.content }}
                 </td>
+                <td>{% for tag in article.tags %}
+                {{ tag.name }},
+                {% endfor %}</td>
             </tr>
         {% endfor %}
         </tbody>

@@ -14,13 +14,14 @@ use App\Entity\Article;
 use App\Entity\Category;
 class BlogController extends AbstractController
 {
-    /**
-     * @Route("/blog/{page}", requirements={"page"="\d+"}, name="blog_list")
-     */
-    public function list($page)
-    {
-        return $this->render('blog/index.html.twig', ['page' => $page]);
-    }
+//    /**
+//     * @Route("/blog/{page}", requirements={"page"="\d+"}, name="blog_list")
+//     */
+//    public function list($page)
+//    {
+//        return $this->render('blog/index.html.twig', ['page' => $page]);
+//    }
+
     /**
      * Getting a article with a formatted slug for title
      *
